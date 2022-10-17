@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+Route::group(['namespace' => 'App\Http\Controllers\Shorten'], function () {
+    Route::get('/dec', 'DecodeController@decodeShortLink')->name('decodeShortLink');
+});
+
 Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
     Route::get('login', 'LoginController@showAdminLoginForm')->name('login');
     Route::get('signup', 'RegisterController@showRegistrationForm')->name('signup');
@@ -31,6 +35,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Guest'], function () {
 
 Route::group(['namespace' => 'App\Http\Controllers\User', 'as' => 'user.', 'middleware' => ['auth', 'is_user']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::post('/storeShortenLink', 'HomeController@storeShortenLink')->name('storeShortenLink');
     Route::get('/report', 'ReportController@index')->name('report');
 });
 
