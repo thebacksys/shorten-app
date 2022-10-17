@@ -7,6 +7,7 @@
     <title>{{ env('APP_NAME') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <meta name="_token" content="{{ csrf_token() }}">
 </head>
 
 <body style="padding-top: 70px;">
@@ -46,12 +47,25 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('signup') }}">Sign up</a>
-                        </li>
+                        @if (auth()->check())
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ auth()->user()->email }}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                                    <li><a class="dropdown-item disabled" href="">Setting (Coming Soon)</a></li>
+                                </ul>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('signup') }}">Sign up</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
